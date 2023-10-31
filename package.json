@@ -3,5 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Alex Nicolas <alexoliveira604@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "vite": "^4.4.5"
+  }
 }
