@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { useUser } from "../hook"
 
 export const SelectSort = () => {
-    const { repositories, setRepositories } = useUser()
+    const { isUserFound, repositories, setRepositories } = useUser()
     const hasRepositories = useMemo(() => repositories.length > 0, [repositories])
 
     const handleRepositorySort = (sortBy) => {
@@ -22,5 +22,5 @@ export const SelectSort = () => {
         </select>
     )
 
-    return hasRepositories ? renderSelectSort() : <></>
+    return isUserFound && hasRepositories ? renderSelectSort() : <></>
 }

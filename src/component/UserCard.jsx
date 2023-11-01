@@ -23,6 +23,7 @@ export const UserCard = () => {
     }, [username])
     
     const fetchUser = async () => {
+        setIsUserFound(false)
         setIsLoading(true)
         const response = await axios.get(`https://api.github.com/users/${username}`)
         setIsLoading(false)

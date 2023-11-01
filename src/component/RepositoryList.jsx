@@ -15,7 +15,7 @@ export const RepositoryList = () => {
         if (isUserFound) {
             fetchRepositories()
         }
-    }, [isUserFound])
+    }, [isUserFound, username])
 
     const fetchRepositories = async () => {
         setIsLoading(true)
