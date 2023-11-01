@@ -12,11 +12,11 @@ export const SearchEngine = () => {
     }, [username])
 
     return (
-        <form class="input-group mb-3" onSubmit={handleSubmit}>
-            <span class="input-group-text" id="basic-addon1">@</span>
+        <form className="input-group mb-3" onSubmit={handleSubmit}>
+            <span className="input-group-text" id="basic-addon1">@</span>
             <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Type a GitHub username"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
