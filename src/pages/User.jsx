@@ -1,5 +1,5 @@
-import { RepositoryList, SearchEngine, SelectSort, UserCard } from "../component"
-import { AlertContextProvider, UserContextProvider } from "../context"
+import { RepositoryList, SearchEngine, SelectSort, UserCard } from "@/component"
+import { AlertContextProvider, UserContextProvider } from "@/context"
 
 export function UserPage () {
     return (

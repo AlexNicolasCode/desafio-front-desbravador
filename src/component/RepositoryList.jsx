@@ -2,9 +2,8 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import { Repository } from "./Repository"
-import { useUser } from "../hook"
-import { Loading } from "./Loading"
+import { Repository, Loading } from "@/component"
+import { useUser } from "@/hook"
 
 export const RepositoryList = () => {
     const { username } = useParams()

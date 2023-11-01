@@ -2,7 +2,7 @@ import axios from "axios"
 import { useCallback, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import { useAlert, useUser } from "../hook"
+import { useAlert, useUser } from "@/hook"
 import { Loading } from "./Loading"
 
 export const UserCard = () => {

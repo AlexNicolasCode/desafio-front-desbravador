@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import { AlertContext } from "./context"
-import { statusCode } from "../../main/helper"
-import { useTextConverter } from "../../hook"
+import { AlertContext } from "@/context"
+import { statusCode } from "@/main/helper"
+import { useTextConverter } from "@/hook"
 
 export function AlertContextProvider({ children }) {
     const { username } = useParams()

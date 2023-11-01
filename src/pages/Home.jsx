@@ -1,4 +1,4 @@
-import { SearchEngine } from "../component";
+import { SearchEngine } from "@/component";
 
 export function HomePage () {
     return (

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react"
 
-import { useUser } from "../hook"
+import { useUser } from "@/hook"
 
 export const SelectSort = () => {
     const { isUserFound, repositories, setRepositories } = useUser()
