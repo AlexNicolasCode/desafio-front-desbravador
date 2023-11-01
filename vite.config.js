@@ -3,13 +3,15 @@ import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 
 export default defineConfig({
+  root: 'src',
   server: {
     port: 3000,
   },
   resolve: {
-    alias: {
-      '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
-    }
+    alias: [
+      { find: '~bootstrap', replacement: path.resolve(__dirname, 'node_modules/bootstrap') },
+      { find: '@', replacement: path.resolve(__dirname, 'src') },
+    ]
   },
   plugins: [react()],
 })
