@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import { useUser } from "../hook"
@@ -9,6 +9,7 @@ export const UserCard = () => {
     const { username } = useParams()
     const { isUserFound, setIsUserFound, setRepositories } = useUser()
     const [isLoading, setIsLoading] = useState(false)
+    const alertName = useRef()
     const [user, setUser] = useState({
         name: '',
         bio: '',
@@ -27,11 +28,6 @@ export const UserCard = () => {
             setIsLoading(true)
             setIsUserFound(false)
             const response = await axios.get(`https://api.github.com/users/${username}`)
-            const notFound = 404
-            if (response.status === notFound) {
-                setRepositories([])
-                return
-            }
             const { name, bio, email, avatar_url, followers, following  } = response.data
             setUser({
                 name,
@@ -43,8 +39,14 @@ export const UserCard = () => {
             })
             setIsUserFound(true)
         } catch (error) {
-            setRepositories([])
             console.error(error)
+            setRepositories([])
+            const notFound = 404
+            if (error.response.status === notFound) {
+                alertName.current = 'notFound'
+                return
+            }
+            alertName.current = 'error'
         } finally {
             setIsLoading(false)
         }
@@ -63,6 +65,12 @@ export const UserCard = () => {
         </section> 
     ), [username])
 
+    const renderErrorAlert = () => (
+        <section className="alert alert-danger">
+            Ops! Please, Try again later!
+        </section> 
+    )
+
     const renderProfileCard = useCallback(() => (
         <section className="card">
             <img src={user.avatar_url} className="card-img-top" alt={username} />
@@ -77,8 +85,16 @@ export const UserCard = () => {
         </section>
     ), [user])
 
+    const renderAlert = useCallback(() => {
+        const alertMapper = {
+            'notFound': renderNotFoundAlert(),
+            'error':  renderErrorAlert(),
+        }
+        return alertMapper[alertName.current] ?? renderErrorAlert()
+    }, [alertName])
+
     const renderCard = useCallback(
-        () => isUserFound ? renderProfileCard() : renderNotFoundAlert(),
+        () => isUserFound ? renderProfileCard() : renderAlert(),
         [isUserFound, username]
     )
 
