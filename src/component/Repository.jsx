@@ -32,18 +32,26 @@ export const Repository = ({ fullName, name, starsCount }) => {
     }, [isActive, isFetched])
 
     return (
-        <li onClick={toggleDetailsTab}>
-            {name} - {starsCount}
-            {isLoading && <Loading />}
-            {!isLoading && isActive &&
-                <section>
-                    <strong>Description:</strong> {details.current.description}<br/>
-                    <strong>Language:</strong> {details.current.language}<br/>
-                    <Link to={details.current.githubUrl} target="_blank">
-                        Check More Details
-                    </Link>
-                </section>
-            }
+        <li
+            className="list-group-item"
+            onClick={toggleDetailsTab}
+        >
+            <p><strong>{name}</strong></p>
+            <p>{starsCount} Stars</p>
+            <section className="container">
+                {isLoading && <Loading />}
+                {!isLoading && isActive &&
+                    <>
+                        <p><strong>Description:</strong> {details.current.description}</p>
+                        <p><strong>Language:</strong> {details.current.language}</p>
+                        <Link to={details.current.githubUrl} target="_blank">
+                            <button className="btn btn-primary">
+                                Check More Details
+                            </button>
+                        </Link>
+                    </>
+                }
+            </section>
         </li>
     )
 }

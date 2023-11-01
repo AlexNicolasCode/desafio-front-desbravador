@@ -44,7 +44,7 @@ export const RepositoryList = () => {
     }
 
     return (
-        <ul>
+        <ul className="list-group">
             {isLoading 
                 ? <Loading />
                 : repositories.map(({ fullName, name, starsCount }, index) => 
