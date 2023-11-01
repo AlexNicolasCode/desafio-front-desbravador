@@ -7,7 +7,7 @@ import { Loading } from "./Loading"
 
 export const UserCard = () => {
     const { username } = useParams()
-    const { isUserFound, setIsUserFound } = useUser()
+    const { isUserFound, setIsUserFound, setRepositories } = useUser()
     const [isLoading, setIsLoading] = useState(false)
     const [user, setUser] = useState({
         name: '',
@@ -23,24 +23,31 @@ export const UserCard = () => {
     }, [username])
     
     const fetchUser = async () => {
-        setIsUserFound(false)
-        setIsLoading(true)
-        const response = await axios.get(`https://api.github.com/users/${username}`)
-        setIsLoading(false)
-        const notFound = 404
-        if (response.status === notFound) {
-            return
+        try {
+            setIsLoading(true)
+            setIsUserFound(false)
+            const response = await axios.get(`https://api.github.com/users/${username}`)
+            const notFound = 404
+            if (response.status === notFound) {
+                setRepositories([])
+                return
+            }
+            const { name, bio, email, avatar_url, followers, following  } = response.data
+            setUser({
+                name,
+                bio,
+                email,
+                avatar_url,
+                followersCount: followers,
+                followingCount: following,
+            })
+            setIsUserFound(true)
+        } catch (error) {
+            setRepositories([])
+            console.error(error)
+        } finally {
+            setIsLoading(false)
         }
-        const { name, bio, email, avatar_url, followers, following  } = response.data
-        setUser({
-            name,
-            bio,
-            email,
-            avatar_url,
-            followersCount: followers,
-            followingCount: following,
-        })
-        setIsUserFound(true)
     }
 
     const renderEmptyState = () => (
