@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { HomePage, UserPage } from "@/pages"
+import { HomePage, UserPage, RepositoryPage } from "@/pages"
 
 export const router = createBrowserRouter([
     {
@@ -10,6 +10,10 @@ export const router = createBrowserRouter([
     {
       path: "/user/:username",
       element: <UserPage />,
+    },
+    {
+      path: "/repo/:username/:reponame",
+      element: <RepositoryPage />
     },
     {
       path: "*",
