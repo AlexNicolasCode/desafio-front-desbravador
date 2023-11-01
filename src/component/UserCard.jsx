@@ -50,9 +50,16 @@ export const UserCard = () => {
         }
     }, [username])
 
+    const truncateText = (text) => {
+        if (text.length >= 7) {
+            return `${text.substring(0, 7)}...`
+        }
+        return text
+    }
+
     const renderEmptyState = useCallback(() => (
-        <section className="card">
-            {username} Not Found on GitHub database
+        <section className="alert alert-warning">
+            {truncateText(username)} Not Found on GitHub database
         </section> 
     ), [username])
 
