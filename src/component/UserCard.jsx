@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import { useUser } from "../hook"
@@ -22,7 +22,7 @@ export const UserCard = () => {
         fetchUser()
     }, [username])
     
-    const fetchUser = async () => {
+    const fetchUser = useCallback(async () => {
         try {
             setIsLoading(true)
             setIsUserFound(false)
@@ -48,15 +48,15 @@ export const UserCard = () => {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [username])
 
-    const renderEmptyState = () => (
+    const renderEmptyState = useCallback(() => (
         <section className="card">
             {username} Not Found on GitHub database
         </section> 
-    )
+    ), [username])
 
-    const renderProfileCard = () => (
+    const renderProfileCard = useCallback(() => (
         <section className="card">
             <img src={user.avatar_url} className="card-img-top" alt={username} />
             <section className="card-body">
@@ -68,9 +68,9 @@ export const UserCard = () => {
                 </p>
             </section>
         </section>
-    )
+    ), [user])
 
-    const renderCard = () => isUserFound ? renderProfileCard() : renderEmptyState()
+    const renderCard = useCallback(() => isUserFound ? renderProfileCard() : renderEmptyState(), [isUserFound])
 
     return isLoading ? <Loading/> : renderCard()
 }

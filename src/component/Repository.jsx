@@ -10,7 +10,7 @@ export const Repository = ({ fullName, name, starsCount }) => {
     const [isFetched, setIsFetched] = useState(false)
     const details = useRef({})
 
-    const fetchRepositoryDetails = async () => {
+    const fetchRepositoryDetails = useCallback(async () => {
         setIsLoading(true)
         const response = await axios.get(`https://api.github.com/repos/${fullName}`)
         setIsLoading(false)
@@ -20,7 +20,7 @@ export const Repository = ({ fullName, name, starsCount }) => {
             description: description ?? '---',
             githubUrl: html_url,
         }
-    }
+    }, [fullName])
 
     const toggleDetailsTab = useCallback(async () => {
         setIsActive(!isActive)
@@ -29,7 +29,7 @@ export const Repository = ({ fullName, name, starsCount }) => {
         }
         await fetchRepositoryDetails()
         setIsFetched(true)
-    }, [isActive])
+    }, [isActive, isFetched])
 
     return (
         <li onClick={toggleDetailsTab}>

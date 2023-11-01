@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export const SearchEngine = () => {
@@ -6,10 +6,10 @@ export const SearchEngine = () => {
     const navigate = useNavigate()
     const [username, setUsername] = useState(params.username)
 
-    const handleSubmit = ($event) => {
+    const handleSubmit = useCallback(($event) => {
         $event.preventDefault()
         navigate(`/user/${username}`)
-    }
+    }, [username])
 
     return (
         <form class="input-group mb-3" onSubmit={handleSubmit}>
