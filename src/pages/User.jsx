@@ -55,11 +55,12 @@ export function UserPage () {
     
     const fetchRepositories = async () => {
         const response = await axios.get(`https://api.github.com/users/${username}/repos`)
-        const repositories = response.data.map((repository) => ({
+        const repositoriesReduced = response.data.map((repository) => ({
             name: repository.name,
             starsCount: repository.stargazers_count,
         }))
-        setRepositories(repositories)
+        const reorderedRepositories = repositoriesReduced.sort((a, b) => b.starsCount - a.starsCount)
+        setRepositories(reorderedRepositories)
     }
 
     const renderEmptyState = () => (
