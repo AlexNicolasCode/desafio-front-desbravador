@@ -25,7 +25,6 @@ export const UserCard = () => {
     
     const fetchUser = useCallback(async () => {
         try {
-            setIsActiveAlert(false)
             setIsLoading(true)
             setIsUserFound(false)
             const response = await axios.get(`https://api.github.com/users/${username}`)
