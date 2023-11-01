@@ -6,9 +6,15 @@ export function UserPage () {
         <>
             <SearchEngine />
             <UserContextProvider>
-                <UserCard />
-                <SelectSort/>
-                <RepositoryList/>
+                <section className="row container mx-0">
+                    <section className="col-md-2">
+                        <UserCard />
+                    </section>
+                    <section className="col-md-10">
+                        <SelectSort/>
+                        <RepositoryList/>
+                    </section>
+                </section>
             </UserContextProvider>
         </>
     )
