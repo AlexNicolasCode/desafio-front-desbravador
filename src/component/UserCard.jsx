@@ -1,14 +1,14 @@
-import axios from "axios"
 import { useCallback, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import { useAlert, useUser } from "@/hook"
+import { useAlert, useUser, useGitHubClient } from "@/hook"
 import { Loading } from "./Loading"
 
 export const UserCard = () => {
     const { username } = useParams()
     const { setIsUserFound } = useUser()
     const { setIsActiveAlert, setAlertStatusCode } = useAlert()
+    const githubClient  = useGitHubClient()
     const [isLoading, setIsLoading] = useState(false)
     const [user, setUser] = useState({
         name: '',
@@ -27,7 +27,7 @@ export const UserCard = () => {
         try {
             setIsLoading(true)
             setIsUserFound(false)
-            const response = await axios.get(`https://api.github.com/users/${username}`)
+            const response = await githubClient.get(`/users/${username}`)
             const { name, bio, email, avatar_url, followers, following  } = response.data
             setUser({
                 name,

@@ -3,10 +3,11 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import { Repository, Loading } from "@/component"
-import { useUser } from "@/hook"
+import { useUser, useGitHubClient } from "@/hook"
 
 export const RepositoryList = () => {
     const { username } = useParams()
+    const githubClient  = useGitHubClient()
     const { repositories, setRepositories, isUserFound } = useUser()
     const [isLoading , setIsLoading] = useState(false)
 
@@ -31,7 +32,7 @@ export const RepositoryList = () => {
     const fetchRepositories = async () => {
         try {
             setIsLoading(true)
-            const response = await axios.get(`https://api.github.com/users/${username}/repos`)
+            const response = await githubClient.get(`/users/${username}/repos`)
             const reducedRepositories = reduceRepositories(response.data)
             const sortedRepositories = resortToDescRepositories(reducedRepositories)
             setRepositories(sortedRepositories)

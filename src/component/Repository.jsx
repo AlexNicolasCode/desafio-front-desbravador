@@ -1,18 +1,19 @@
-import axios from "axios"
 import { useCallback, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 
 import { Loading } from "./Loading"
+import { useGitHubClient } from "@/hook"
 
 export const Repository = ({ fullName, name, starsCount }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isActive, setIsActive] = useState(false)
     const [isFetched, setIsFetched] = useState(false)
+    const githubClient  = useGitHubClient()
     const details = useRef({})
 
     const fetchRepositoryDetails = useCallback(async () => {
         setIsLoading(true)
-        const response = await axios.get(`https://api.github.com/repos/${fullName}`)
+        const response = await githubClient.get(`/repos/${fullName}`)
         setIsLoading(false)
         const { language, description, html_url } = response.data
         details.current = {
