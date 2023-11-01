@@ -1,7 +1,6 @@
 {
   "name": "desafio-front-desbravador",
   "version": "1.0.0",
-  "main": "index.js",
   "author": "Alex Nicolas <alexoliveira604@gmail.com>",
   "license": "MIT",
   "scripts": {
