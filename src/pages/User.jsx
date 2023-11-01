@@ -47,6 +47,7 @@ export function UserPage () {
             <img src={user.avatar_url} className="card-img-top" alt={username} />
             <section className="card-body">
                 <h5 className="card-title">{user.name}</h5>
+                <h5 className="card-title">{user.email}</h5>
                 <p className="card-text">{user.bio}</p>
                 <p className="card-text">
                     Followed: {user.followersCount} Following: {user.followingCount}
