@@ -14,7 +14,7 @@ export function UserPage () {
         followingCount: 0,
     })
     const [repositories, setRepositories] = useState([])
-    const { username } = useParams()
+    const { username } = useParams()    
 
     useEffect(() => {
         fetchUser()
@@ -25,6 +25,15 @@ export function UserPage () {
             fetchRepositories()
         }
     }, [isUserFound])
+
+    const handleRepositorySort = (sortBy) => {
+        const sortMapper = {
+            "desc": [...repositories].sort((a, b) => b.starsCount - a.starsCount),
+            "asc": [...repositories].sort((a, b) => a.starsCount - b.starsCount),
+        }
+        const sortedRepositories = sortMapper[sortBy] ?? repositories
+        setRepositories(sortedRepositories)
+    }
 
     const fetchUser = async () => {
         const response = await axios.get(`https://api.github.com/users/${username}`)
@@ -76,6 +85,10 @@ export function UserPage () {
                     </p>
                 </section>
             </section>
+            <select onChange={($event) => handleRepositorySort($event.target.value)} defaultValue={"desc"}>
+                <option value={"desc"}>Decrescente</option>
+                <option value={"asc"}>Crescente</option>
+            </select>
             {renderRepositories()}
         </>
     )
