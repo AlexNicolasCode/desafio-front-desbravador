@@ -1,8 +1,7 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 
-import { Repository, Loading } from "@/component"
+import { Loading } from "@/component"
 import { useUser, useGitHubClient } from "@/hook"
 
 export const RepositoryList = () => {
@@ -48,12 +47,12 @@ export const RepositoryList = () => {
             {isLoading 
                 ? <Loading />
                 : repositories.map(({ fullName, name, starsCount }, index) => 
-                    <Repository
-                        name={name}
-                        fullName={fullName}
-                        starsCount={starsCount}
-                        key={index}
-                    />
+                    <li className="list-group-item" key={index}>
+                        <Link to={`/repo/${fullName}`}>
+                            <p><strong>{name}</strong></p>
+                            <p>{starsCount} Stars</p>
+                        </Link>
+                    </li>
                 )
             }
         </ul>
