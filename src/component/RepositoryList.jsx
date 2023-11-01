@@ -32,15 +32,17 @@ export const RepositoryList = () => {
 
     return (
         <ul>
-            {isLoading && <Loading />}
-            {!isLoading && repositories.map(({ fullName, name, starsCount }, index) => 
-                <Repository
-                    name={name}
-                    fullName={fullName}
-                    starsCount={starsCount}
-                    key={index}
-                />
-            )}
+            {isLoading 
+                ? <Loading />
+                : repositories.map(({ fullName, name, starsCount }, index) => 
+                    <Repository
+                        name={name}
+                        fullName={fullName}
+                        starsCount={starsCount}
+                        key={index}
+                    />
+                )
+            }
         </ul>
     )    
 }
