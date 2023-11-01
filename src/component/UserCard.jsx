@@ -70,7 +70,10 @@ export const UserCard = () => {
         </section>
     ), [user])
 
-    const renderCard = useCallback(() => isUserFound ? renderProfileCard() : renderEmptyState(), [isUserFound])
+    const renderCard = useCallback(
+        () => isUserFound ? renderProfileCard() : renderEmptyState(),
+        [isUserFound, username]
+    )
 
     return isLoading ? <Loading/> : renderCard()
 }
