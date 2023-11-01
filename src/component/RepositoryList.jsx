@@ -4,7 +4,11 @@ export const RepositoryList = ({ repositories }) => {
     return (
         <ul>
             {repositories.map((repository, index) => 
-                <Repository name={repository.name} key={index} />
+                <Repository
+                    name={repository.name}
+                    starsCount={repository.starsCount}
+                    key={index}
+                />
             )}
         </ul>
     )    

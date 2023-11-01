@@ -46,7 +46,10 @@ export function UserPage () {
     
     const fetchRepositories = async () => {
         const response = await axios.get(`https://api.github.com/users/${username}/repos`)
-        const repositories = response.data
+        const repositories = response.data.map((repository) => ({
+            name: repository.name,
+            starsCount: repository.stargazers_count,
+        }))
         setRepositories(repositories)
     }
 

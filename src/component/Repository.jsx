@@ -1,7 +1,7 @@
-export const Repository = ({ name }) => {
+export const Repository = ({ name, starsCount }) => {
     return (
         <li>
-            {name}
+            {name} - {starsCount}
         </li>
     )
 }
