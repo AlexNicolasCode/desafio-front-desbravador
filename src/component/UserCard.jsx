@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom"
 
 import { useUser } from "../hook"
 import { Loading } from "./Loading"
+import { statusCode } from "../main/helper"
 
 export const UserCard = () => {
     const { username } = useParams()
     const { isUserFound, setIsUserFound, setRepositories } = useUser()
     const [isLoading, setIsLoading] = useState(false)
-    const alertName = useRef()
+    const alertCode = useRef()
     const [user, setUser] = useState({
         name: '',
         bio: '',
@@ -41,12 +42,11 @@ export const UserCard = () => {
         } catch (error) {
             console.error(error)
             setRepositories([])
-            const notFound = 404
-            if (error.response.status === notFound) {
-                alertName.current = 'notFound'
+            if (error.response.status === statusCode.notFound) {
+                alertCode.current = statusCode.notFound
                 return
             }
-            alertName.current = 'error'
+            alertCode.current = 'error'
         } finally {
             setIsLoading(false)
         }
@@ -87,11 +87,10 @@ export const UserCard = () => {
 
     const renderAlert = useCallback(() => {
         const alertMapper = {
-            'notFound': renderNotFoundAlert(),
-            'error':  renderErrorAlert(),
+            [statusCode.notFound]: renderNotFoundAlert(),
         }
-        return alertMapper[alertName.current] ?? renderErrorAlert()
-    }, [alertName])
+        return alertMapper[alertCode.current] ?? renderErrorAlert()
+    }, [alertCode])
 
     const renderCard = useCallback(
         () => isUserFound ? renderProfileCard() : renderAlert(),
