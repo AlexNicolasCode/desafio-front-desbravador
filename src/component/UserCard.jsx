@@ -3,10 +3,12 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import { useUser } from "../hook"
+import { Loading } from "./Loading"
 
 export const UserCard = () => {
     const { username } = useParams()
     const { isUserFound, setIsUserFound } = useUser()
+    const [isLoading, setIsLoading] = useState(false)
     const [user, setUser] = useState({
         name: '',
         bio: '',
@@ -21,7 +23,9 @@ export const UserCard = () => {
     }, [username])
     
     const fetchUser = async () => {
+        setIsLoading(true)
         const response = await axios.get(`https://api.github.com/users/${username}`)
+        setIsLoading(false)
         const notFound = 404
         if (response.status === notFound) {
             return
@@ -58,5 +62,7 @@ export const UserCard = () => {
         </section>
     )
 
-    return isUserFound ? renderProfileCard() : renderEmptyState()
+    const renderCard = () => isUserFound ? renderProfileCard() : renderEmptyState()
+
+    return isLoading ? <Loading/> : renderCard()
 }
