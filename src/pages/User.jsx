@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router"
+import { RepositoryList } from "../component"
 
 export function UserPage () {
     const [isUserFound, setIsUserFound] = useState(false)
@@ -12,11 +13,18 @@ export function UserPage () {
         followersCount: 0,
         followingCount: 0,
     })
+    const [repositories, setRepositories] = useState([])
     const { username } = useParams()
 
     useEffect(() => {
         fetchUser()
     }, [username])
+
+    useEffect(() => {
+        if (isUserFound) {
+            fetchRepositories()
+        }
+    }, [isUserFound])
 
     const fetchUser = async () => {
         const response = await axios.get(`https://api.github.com/users/${username}`)
@@ -35,6 +43,12 @@ export function UserPage () {
         })
         setIsUserFound(true)
     }
+    
+    const fetchRepositories = async () => {
+        const response = await axios.get(`https://api.github.com/users/${username}/repos`)
+        const repositories = response.data
+        setRepositories(repositories)
+    }
 
     const renderEmptyState = () => (
         <section className="card">
@@ -42,19 +56,26 @@ export function UserPage () {
         </section> 
     )
 
-    const renderUserCard = () => (
-        <section className="card">
-            <img src={user.avatar_url} className="card-img-top" alt={username} />
-            <section className="card-body">
-                <h5 className="card-title">{user.name}</h5>
-                <h5 className="card-title">{user.email}</h5>
-                <p className="card-text">{user.bio}</p>
-                <p className="card-text">
-                    Followed: {user.followersCount} Following: {user.followingCount}
-                </p>
-            </section>
-        </section> 
+    const renderRepositories = () => (
+        <RepositoryList repositories={repositories} />
     )
 
-    return isUserFound ? renderUserCard() : renderEmptyState()
+    const renderUser = () => (
+        <>
+            <section className="card">
+                <img src={user.avatar_url} className="card-img-top" alt={username} />
+                <section className="card-body">
+                    <h5 className="card-title">{user.name}</h5>
+                    <h5 className="card-title">{user.email}</h5>
+                    <p className="card-text">{user.bio}</p>
+                    <p className="card-text">
+                        Followed: {user.followersCount} Following: {user.followingCount}
+                    </p>
+                </section>
+            </section>
+            {renderRepositories()}
+        </>
+    )
+
+    return isUserFound ? renderUser() : renderEmptyState()
 }
