@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom"
 export const SearchEngine = () => {
     const params = useParams()
     const navigate = useNavigate()
-    const [username, setUsername] = useState(params.username)
+    const [username, setUsername] = useState(params.username ?? '')
 
     const handleSubmit = useCallback(($event) => {
         $event.preventDefault()
