@@ -57,7 +57,7 @@ export const UserCard = () => {
         return text
     }
 
-    const renderEmptyState = useCallback(() => (
+    const renderNotFoundAlert = useCallback(() => (
         <section className="alert alert-warning">
             {truncateText(username)} Not Found on GitHub database
         </section> 
@@ -78,7 +78,7 @@ export const UserCard = () => {
     ), [user])
 
     const renderCard = useCallback(
-        () => isUserFound ? renderProfileCard() : renderEmptyState(),
+        () => isUserFound ? renderProfileCard() : renderNotFoundAlert(),
         [isUserFound, username]
     )
 
