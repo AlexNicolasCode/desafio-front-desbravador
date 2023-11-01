@@ -3,18 +3,13 @@ import { useParams } from "react-router-dom"
 
 import { AlertContext } from "./context"
 import { statusCode } from "../../main/helper"
+import { useTextConverter } from "../../hook"
 
 export function AlertContextProvider({ children }) {
     const { username } = useParams()
     const [isActiveAlert, setIsActiveAlert] = useState(false) 
     const [alertStatusCode, setAlertStatusCode] = useState()
-
-    const truncateText = (text) => {
-        if (text.length >= 7) {
-            return `${text.substring(0, 7)}...`
-        }
-        return text
-    }
+    const { truncateText } = useTextConverter()
 
     const renderNotFoundAlert = useCallback(() => (
         <section className="alert alert-warning">
