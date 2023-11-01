@@ -49,7 +49,12 @@ export const UserCard = () => {
     
     const renderProfileCard = useCallback(() => (
         <section className="card">
-            <img src={user.avatar_url} className="card-img-top" alt={username} />
+            <img
+                src={user.avatar_url}
+                className="card-img-top" alt={username}
+                width={'100%'}
+                height={'100%'}
+            />
             <section className="card-body">
                 <h5 className="card-title">{user.name}</h5>
                 <h5 className="card-title">{user.email}</h5>
