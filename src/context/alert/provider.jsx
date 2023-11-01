@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import { AlertContext } from "./context"
@@ -8,8 +8,12 @@ import { useTextConverter } from "../../hook"
 export function AlertContextProvider({ children }) {
     const { username } = useParams()
     const [isActiveAlert, setIsActiveAlert] = useState(false) 
-    const [alertStatusCode, setAlertStatusCode] = useState()
+    const [alertStatusCode, setAlertStatusCode] = useState(false)
     const { truncateText } = useTextConverter()
+
+    useEffect(() => {
+        setIsActiveAlert(false)
+    }, [username])
 
     const renderNotFoundAlert = useCallback(() => (
         <section className="alert alert-warning">
