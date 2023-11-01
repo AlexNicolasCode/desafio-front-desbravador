@@ -21,9 +21,10 @@ export const RepositoryList = () => {
         setIsLoading(true)
         const response = await axios.get(`https://api.github.com/users/${username}/repos`)
         setIsLoading(false)
-        const repositoriesReduced = response.data.map((repository) => ({
-            name: repository.name,
-            starsCount: repository.stargazers_count,
+        const repositoriesReduced = response.data.map(({ full_name, name, stargazers_count }) => ({
+            name: name,
+            fullName: full_name,
+            starsCount: stargazers_count,
         }))
         const reorderedRepositories = repositoriesReduced.sort((a, b) => b.starsCount - a.starsCount)
         setRepositories(reorderedRepositories)
@@ -32,10 +33,11 @@ export const RepositoryList = () => {
     return (
         <ul>
             {isLoading && <Loading />}
-            {!isLoading && repositories.map((repository, index) => 
+            {!isLoading && repositories.map(({ fullName, name, starsCount }, index) => 
                 <Repository
-                    name={repository.name}
-                    starsCount={repository.starsCount}
+                    name={name}
+                    fullName={fullName}
+                    starsCount={starsCount}
                     key={index}
                 />
             )}
