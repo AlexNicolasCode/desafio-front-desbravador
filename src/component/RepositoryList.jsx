@@ -17,17 +17,25 @@ export const RepositoryList = () => {
         }
     }, [isUserFound, username])
 
+    const reduceRepositories = (fetchedRepositories) => {
+        return fetchedRepositories.map(({ full_name, name, stargazers_count }) => ({
+            name: name,
+            fullName: full_name,
+            starsCount: stargazers_count,
+        }))
+    }
+
+    const resortToDescRepositories = (repositoriesUnsorted) => {
+        return repositoriesUnsorted.sort((a, b) => b.starsCount - a.starsCount)
+    }
+
     const fetchRepositories = async () => {
         try {
             setIsLoading(true)
             const response = await axios.get(`https://api.github.com/users/${username}/repos`)
-            const repositoriesReduced = response.data.map(({ full_name, name, stargazers_count }) => ({
-                name: name,
-                fullName: full_name,
-                starsCount: stargazers_count,
-            }))
-            const reorderedRepositories = repositoriesReduced.sort((a, b) => b.starsCount - a.starsCount)
-            setRepositories(reorderedRepositories)
+            const reducedRepositories = reduceRepositories(response.data)
+            const sortedRepositories = resortToDescRepositories(reducedRepositories)
+            setRepositories(sortedRepositories)
         } catch (error) {
             console.error(error)
         } finally {
