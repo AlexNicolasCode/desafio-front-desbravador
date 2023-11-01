@@ -2,13 +2,18 @@ import axios from "axios"
 import { useCallback, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 
+import { Loading } from "./Loading"
+
 export const Repository = ({ fullName, name, starsCount }) => {
+    const [isLoading, setIsLoading] = useState(false)
     const [isActive, setIsActive] = useState(false)
     const [isFetched, setIsFetched] = useState(false)
     const details = useRef({})
 
     const fetchRepositoryDetails = async () => {
+        setIsLoading(true)
         const response = await axios.get(`https://api.github.com/repos/${fullName}`)
+        setIsLoading(false)
         const { language, description, html_url } = response.data
         details.current = {
             language: language ?? '---',
@@ -29,7 +34,8 @@ export const Repository = ({ fullName, name, starsCount }) => {
     return (
         <li onClick={toggleDetailsTab}>
             {name} - {starsCount}
-            {isActive &&
+            {isLoading && <Loading />}
+            {!isLoading && isActive &&
                 <section>
                     <strong>Description:</strong> {details.current.description}<br/>
                     <strong>Language:</strong> {details.current.language}<br/>
