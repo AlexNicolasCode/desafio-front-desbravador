@@ -1,12 +1,15 @@
-import { RepositoryList, SelectSort, UserCard } from "../component"
+import { RepositoryList, SearchEngine, SelectSort, UserCard } from "../component"
 import { UserContextProvider } from "../context"
 
 export function UserPage () {
     return (
-        <UserContextProvider>
-            <UserCard />
-            <SelectSort/>
-            <RepositoryList/>
-        </UserContextProvider>
+        <>
+            <SearchEngine />
+            <UserContextProvider>
+                <UserCard />
+                <SelectSort/>
+                <RepositoryList/>
+            </UserContextProvider>
+        </>
     )
 }
