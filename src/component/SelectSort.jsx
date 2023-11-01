@@ -16,7 +16,11 @@ export const SelectSort = () => {
     }, [repositories])
 
     const renderSelectSort = () => (
-        <select onChange={($event) => handleRepositorySort($event.target.value)} defaultValue={"desc"}>
+        <select
+            className="form-select mb-3"
+            onChange={($event) => handleRepositorySort($event.target.value)}
+            defaultValue={"desc"}
+        >
             <option value={"desc"}>Decrescente</option>
             <option value={"asc"}>Crescente</option>
         </select>
