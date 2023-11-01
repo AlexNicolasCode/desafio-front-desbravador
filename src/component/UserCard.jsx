@@ -46,6 +46,10 @@ export const UserCard = () => {
                 alertCode.current = statusCode.notFound
                 return
             }
+            if (error.response.status === statusCode.forbidden) {
+                alertCode.current = statusCode.forbidden
+                return
+            }
             alertCode.current = 'error'
         } finally {
             setIsLoading(false)
@@ -64,6 +68,12 @@ export const UserCard = () => {
             {truncateText(username)} Not Found on GitHub database
         </section> 
     ), [username])
+
+    const renderForbiddenAlert = () => (
+        <section className="alert alert-info">
+            Ops! GitHub API rate limit exceeded!
+        </section> 
+    )
 
     const renderErrorAlert = () => (
         <section className="alert alert-danger">
@@ -88,6 +98,7 @@ export const UserCard = () => {
     const renderAlert = useCallback(() => {
         const alertMapper = {
             [statusCode.notFound]: renderNotFoundAlert(),
+            [statusCode.forbidden]: renderForbiddenAlert(),
         }
         return alertMapper[alertCode.current] ?? renderErrorAlert()
     }, [alertCode])
